@@ -3,6 +3,7 @@ const board = [];
 
 function createBoard() {
     const gameBoard = document.getElementById('game-board');
+    gameBoard.innerHTML = ''; // Clear previous board for restart
     for (let row = 0; row < boardSize; row++) {
         board[row] = [];
         for (let col = 0; col < boardSize; col++) {
@@ -35,7 +36,10 @@ function handleClick(row, col) {
 function checkWin() {
     const isWin = board.flat().every(square => !square.classList.contains('is-off'));
     if (isWin) {
-        window.alert('You win!');
+        setTimeout(() => {
+            window.alert('You win!');
+            startNewGame(); // Automatically restart game
+        }, 100); // Delay for smoother experience
     }
 }
 
@@ -47,5 +51,11 @@ function randomizeBoard(moves = 10) {
     }
 }
 
-createBoard();
-randomizeBoard(15); // 15 random simulated clicks
+// Helper to restart the board
+function startNewGame() {
+    createBoard();
+    randomizeBoard(15);
+}
+
+// Start the first game
+startNewGame();
